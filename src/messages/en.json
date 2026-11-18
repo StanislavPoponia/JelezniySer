@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "title": "JS Moto — motorcycle shop and workshop, Chernivtsi",
+    "description": "JS Moto (Jelezniy Ser Moto): motorcycle parts, repair, restoration and diagnostics in Chernivtsi."
+  },
+  "common": {
+    "close": "Close",
+    "menu": "Menu",
+    "placeholderAlt": "Placeholder: drawn motocross motorcycle",
+    "logoAlt": "JS Moto logo",
+    "language": "Language"
+  },
+  "nav": {
+    "contacts": "Contacts",
+    "shop": "Shop",
+    "repair": "Repair",
+    "collection": "My collection",
+    "login": "Log in",
+    "logout": "Log out",
+    "cart": "Cart"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "contacts": {
+    "title": "Contacts",
+    "placeholder": "Contact details will appear here soon."
+  },
+  "home": {
+    "about": {
+      "title": "About us",
+      "text": "JS Moto is a motorcycle shop and workshop in Chernivtsi. We restore, repair and diagnose motorcycles, from routine maintenance to a full rebuild.",
+      "points": {
+        "restoration": "Restoration",
+        "repair": "Repair",
+        "diagnostics": "Diagnostics"
+      }
+    },
+    "master": {
+      "title": "Master Serhii",
+      "subtitle": "Owner and head mechanic",
+      "text": "Serhii has worked with motorcycles for many years. He grew from an enthusiast into a qualified master who takes on everything from quick diagnostics to complex restorations. He treats every bike as his own: honestly, carefully and all the way to the result. His love of motorcycles is the main reason customers keep coming back.",
+      "facts": {
+        "experience": "Years of experience",
+        "qualification": "High qualification",
+        "dedication": "Devotion to the craft"
+      }
+    }
+  },
+  "shop": {
+    "title": "Shop",
+    "searchPlaceholder": "Search products",
+    "searchLabel": "Search products",
+    "searchButton": "Search",
+    "empty": "Products are coming soon."
+  },
+  "repair": {
+    "title": "Repair",
+    "intro": "Motorcycle repair, restoration and diagnostics in our workshop.",
+    "services": {
+      "diagnostics": {
+        "title": "Diagnostics",
+        "text": "We find the cause of a fault before the repair begins."
+      },
+      "repair": {
+        "title": "Repair",
+        "text": "Engine, transmission, suspension, electrics and routine maintenance."
+      },
+      "restoration": {
+        "title": "Restoration",
+        "text": "We bring a bike back to a look and performance close to factory."
+      }
+    },
+    "soon": "The full list of services and prices will appear soon."
+  },
+  "collection": {
+    "title": "My collection",
+    "intro": "Photos and videos of master Serhii's work.",
+    "soon": "Works will appear soon."
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty."
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Repeat password",
+    "fullName": "Name",
+    "login": {
+      "title": "Log in",
+      "submit": "Log in",
+      "forgot": "Forgot your password?",
+      "noAccount": "No account yet?",
+      "toRegister": "Sign up"
+    },
+    "register": {
+      "title": "Sign up",
+      "submit": "Sign up",
+      "haveAccount": "Already have an account?",
+      "toLogin": "Log in",
+      "checkEmail": "We sent you a confirmation email. Follow the link in it to finish signing up."
+    },
+    "forgot": {
+      "title": "Password recovery",
+      "text": "Enter your email and we will send you a link to change your password.",
+      "submit": "Send link",
+      "sent": "If such an account exists, we sent it an email with a link.",
+      "back": "Back to log in"
+    },
+    "reset": {
+      "title": "New password",
+      "submit": "Save password",
+      "done": "Password changed."
+    },
+    "errors": {
+      "invalidCredentials": "Wrong email or password.",
+      "emailNotConfirmed": "Please confirm your email using the link in the message.",
+      "emailRequired": "Enter your email.",
+      "passwordTooShort": "Password must be at least 8 characters.",
+      "passwordMismatch": "Passwords do not match.",
+      "userExists": "An account with this email already exists.",
+      "tooManyRequests": "Too many attempts. Please try again later.",
+      "sessionMissing": "The link is invalid or has expired. Request a new one.",
+      "generic": "Something went wrong. Please try again.",
+      "callbackFailed": "Could not confirm sign-in. Please try again."
+    }
+  }
+}

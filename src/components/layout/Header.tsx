@@ -1,8 +1,9 @@
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
+import { LogoLink } from "./LogoLink";
 import { createClient } from "@/lib/supabase/server";
 import { Logo } from "@/components/ui/Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { HeaderShell } from "./HeaderShell";
 import { MobileMenu } from "./MobileMenu";
 import { NavLinks } from "./NavLinks";
 import { UserMenu } from "./UserMenu";
@@ -14,12 +15,16 @@ export async function Header() {
   const isLoggedIn = Boolean(data?.claims);
 
   return (
-    <header className="relative z-40 border-b border-line bg-black">
-      <div className="mx-auto flex h-20 max-w-6xl items-center gap-3 px-4 sm:px-6">
+    <HeaderShell>
+      <div className="mx-auto flex h-20 max-w-6xl items-center gap-3 px-4 transition-[height] duration-300 group-data-[scrolled=true]:h-14 sm:px-6">
         <LanguageSwitcher />
-        <Link href="/" aria-label="JS Moto" className="shrink-0">
-          <Logo size={60} title={t("logoAlt")} />
-        </Link>
+        <LogoLink>
+          <Logo
+            size={60}
+            title={t("logoAlt")}
+            className="h-[60px] w-[60px] transition-[width,height] duration-300 group-data-[scrolled=true]:h-[40px] group-data-[scrolled=true]:w-[40px]"
+          />
+        </LogoLink>
 
         <div className="ml-auto hidden items-center gap-6 lg:flex">
           <NavLinks />
@@ -33,6 +38,6 @@ export async function Header() {
           </MobileMenu>
         </div>
       </div>
-    </header>
+    </HeaderShell>
   );
 }

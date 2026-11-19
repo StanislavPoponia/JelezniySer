@@ -25,7 +25,7 @@ export function LanguageSwitcher() {
             key={code}
             type="button"
             aria-pressed={active}
-            onClick={() => router.replace(pathname, { locale: code })}
+            onClick={() => router.replace(pathname, { locale: code, scroll: false })}
             className={`px-2.5 py-1.5 transition-colors ${
               active ? "bg-foreground text-background" : "text-muted hover:text-foreground"
             }`}

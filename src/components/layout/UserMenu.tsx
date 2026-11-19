@@ -36,7 +36,7 @@ export async function UserMenu({ isLoggedIn, orientation = "row" }: UserMenuProp
   if (!isLoggedIn) {
     return (
       <div className={`flex gap-2 ${direction}`}>
-        <Link href="/login" className={buttonClassName("outline")}>
+        <Link href="/login" className={buttonClassName("outline", "min-w-28")}>
           {t("login")}
         </Link>
       </div>
@@ -45,13 +45,13 @@ export async function UserMenu({ isLoggedIn, orientation = "row" }: UserMenuProp
 
   return (
     <div className={`flex gap-2 ${direction}`}>
-      <Link href="/cart" className={buttonClassName("ghost")}>
+      <Link href="/cart" className={buttonClassName("ghost", "min-w-28")}>
         <CartIcon />
         {t("cart")}
       </Link>
       <form action={signOut} className="contents">
         <input type="hidden" name="locale" value={locale} />
-        <button type="submit" className={buttonClassName("outline")}>
+        <button type="submit" className={buttonClassName("outline", "min-w-28")}>
           {t("logout")}
         </button>
       </form>

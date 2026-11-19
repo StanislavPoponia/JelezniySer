@@ -16,12 +16,80 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+  /* Резервуємо місце під скролбар, щоб сторінка не зсувалась по горизонталі
+     при зміні довжини контенту (наприклад, під час перемикання мови). */
+  scrollbar-gutter: stable;
+}
+
+/* Тексти різних мов мають різну довжину: кнопки й посилання не переносять
+   рядок, тож їхня висота та відступи не змінюються між мовами. */
+button,
+a {
+  white-space: nowrap;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
+}
+
+/* Логотип: поки на лого наведено курсор, колесо збільшується й повільно крутиться
+   (напис лишається на місці). Збільшення й обертання — у різних групах, щоб не конфліктували. */
+.logo-wheel,
+.logo-wheel-spin,
+.logo-text {
+  transform-origin: 60px 60px;
+}
+
+.logo-wheel,
+.logo-text {
+  transition: transform 0.4s ease;
+}
+
+a:hover .logo-wheel,
+a:focus-visible .logo-wheel,
+svg:hover .logo-wheel {
+  transform: scale(1.12);
+}
+
+/* Напис збільшується зовсім трохи, щоб лишатися всередині колеса */
+a:hover .logo-text,
+a:focus-visible .logo-text,
+svg:hover .logo-text {
+  transform: scale(1.06);
+}
+
+a:hover .logo-wheel-spin,
+svg:hover .logo-wheel-spin {
+  animation: logo-wheel-spin 2.8s linear infinite;
+}
+
+@keyframes logo-wheel-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-wheel,
+  .logo-text {
+    transition: none;
+  }
+
+  a:hover .logo-wheel,
+  a:focus-visible .logo-wheel,
+  svg:hover .logo-wheel,
+  a:hover .logo-text,
+  a:focus-visible .logo-text,
+  svg:hover .logo-text {
+    transform: none;
+  }
+
+  a:hover .logo-wheel-spin,
+  svg:hover .logo-wheel-spin {
+    animation: none;
+  }
 }
 
 ::selection {

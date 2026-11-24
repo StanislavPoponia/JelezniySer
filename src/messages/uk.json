@@ -24,7 +24,29 @@
   },
   "contacts": {
     "title": "Контакти",
-    "placeholder": "Контактні дані з'являться тут найближчим часом."
+    "labelAddress": "Адреса",
+    "labelPhones": "Телефони",
+    "labelEmail": "Пошта",
+    "labelSchedule": "Графік роботи",
+    "address": "Чернівці, Чернівецька область, вул. Сергія Ватрича, 24 Б",
+    "scheduleTitle": "Графік роботи",
+    "scheduleHint": "Натисніть, щоб побачити розклад",
+    "scheduleClosed": "Вихідний",
+    "days": {
+      "mon": "Понеділок",
+      "tue": "Вівторок",
+      "wed": "Середа",
+      "thu": "Четвер",
+      "fri": "Пʼятниця",
+      "sat": "Субота",
+      "sun": "Неділя"
+    },
+    "emailSubject": "Запит на ремонт / консультацію (JS Moto)",
+    "viber": "Viber",
+    "viberAria": "Написати у Viber {phone}",
+    "mapTitle": "Карта: {address}",
+    "mapOpen": "Відкрити в Google Maps",
+    "mapOpenAria": "Відкрити в Google Maps: {address}"
   },
   "home": {
     "about": {

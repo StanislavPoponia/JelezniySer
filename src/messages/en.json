@@ -24,7 +24,29 @@
   },
   "contacts": {
     "title": "Contacts",
-    "placeholder": "Contact details will appear here soon."
+    "labelAddress": "Address",
+    "labelPhones": "Phones",
+    "labelEmail": "Email",
+    "labelSchedule": "Working hours",
+    "address": "24 B Serhiia Vatrycha St, Chernivtsi, Chernivtsi Oblast, Ukraine",
+    "scheduleTitle": "Working hours",
+    "scheduleHint": "Tap to see the full schedule",
+    "scheduleClosed": "Closed",
+    "days": {
+      "mon": "Monday",
+      "tue": "Tuesday",
+      "wed": "Wednesday",
+      "thu": "Thursday",
+      "fri": "Friday",
+      "sat": "Saturday",
+      "sun": "Sunday"
+    },
+    "emailSubject": "Repair / consultation request (JS Moto)",
+    "viber": "Viber",
+    "viberAria": "Message on Viber {phone}",
+    "mapTitle": "Map: {address}",
+    "mapOpen": "Open in Google Maps",
+    "mapOpenAria": "Open in Google Maps: {address}"
   },
   "home": {
     "about": {

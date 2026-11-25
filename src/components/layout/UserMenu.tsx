@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { signOut } from "@/lib/auth/actions";
 import { buttonClassName } from "@/components/ui/Button";
+import { NavLink } from "./NavLink";
 
 type UserMenuProps = {
   isLoggedIn: boolean;
@@ -36,19 +36,19 @@ export async function UserMenu({ isLoggedIn, orientation = "row" }: UserMenuProp
   if (!isLoggedIn) {
     return (
       <div className={`flex gap-2 ${direction}`}>
-        <Link href="/login" className={buttonClassName("outline", "min-w-28")}>
+        <NavLink href="/login" className={buttonClassName("outline", "min-w-28")}>
           {t("login")}
-        </Link>
+        </NavLink>
       </div>
     );
   }
 
   return (
     <div className={`flex gap-2 ${direction}`}>
-      <Link href="/cart" className={buttonClassName("ghost", "min-w-28")}>
+      <NavLink href="/cart" className={buttonClassName("ghost", "min-w-28 pl-7 pr-3")}>
         <CartIcon />
         {t("cart")}
-      </Link>
+      </NavLink>
       <form action={signOut} className="contents">
         <input type="hidden" name="locale" value={locale} />
         <button type="submit" className={buttonClassName("outline", "min-w-28")}>

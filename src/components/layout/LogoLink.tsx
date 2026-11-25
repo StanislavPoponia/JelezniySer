@@ -2,15 +2,22 @@
 
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
+import { useTouchSpin } from "./useTouchSpin";
 
 // Клік по логотипу веде на головну й завжди прокручує сторінку на самий верх.
 export function LogoLink({ children }: { children: ReactNode }) {
+  const { spinning, toggle } = useTouchSpin();
+
   return (
     <Link
       href="/"
       aria-label="JS Moto"
       className="shrink-0"
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      data-spin={spinning}
+      onClick={() => {
+        toggle();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
     >
       {children}
     </Link>

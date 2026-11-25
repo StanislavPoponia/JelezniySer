@@ -1,13 +1,15 @@
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { ContactsModal } from "@/components/contacts/ContactsModal";
+import { NavLink } from "./NavLink";
+import { NavWheel } from "./NavWheel";
+import { navLabelClass } from "./navLabel";
 
 type NavLinksProps = {
   orientation?: "row" | "column";
 };
 
 const linkClass =
-  "rounded-md px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-foreground";
+  "rounded-md py-2 pl-7 pr-1.5 text-sm font-medium text-muted transition-colors hover:text-foreground aria-[current=page]:text-foreground";
 
 export async function NavLinks({ orientation = "row" }: NavLinksProps) {
   const t = await getTranslations("nav");
@@ -15,16 +17,20 @@ export async function NavLinks({ orientation = "row" }: NavLinksProps) {
 
   return (
     <nav className={`flex gap-1 ${direction}`}>
-      <ContactsModal className={`${linkClass} text-left`} />
-      <Link href="/shop" className={linkClass}>
+      <ContactsModal
+        className={`group/nav relative ${linkClass} text-left`}
+        labelClassName={navLabelClass}
+        icon={<NavWheel />}
+      />
+      <NavLink href="/shop" className={linkClass}>
         {t("shop")}
-      </Link>
-      <Link href="/repair" className={linkClass}>
+      </NavLink>
+      <NavLink href="/repair" className={linkClass}>
         {t("repair")}
-      </Link>
-      <Link href="/collection" className={linkClass}>
+      </NavLink>
+      <NavLink href="/collection" className={linkClass}>
         {t("collection")}
-      </Link>
+      </NavLink>
     </nav>
   );
 }

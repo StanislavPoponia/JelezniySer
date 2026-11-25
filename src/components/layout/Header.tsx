@@ -16,13 +16,13 @@ export async function Header() {
 
   return (
     <HeaderShell>
-      <div className="mx-auto flex h-20 max-w-6xl items-center gap-3 px-4 transition-[height] duration-300 group-data-[scrolled=true]:h-14 sm:px-6">
+      <div className="mx-auto flex h-20 max-w-6xl items-center gap-3 px-4 transition-[height] duration-300 group-data-[scrolled=true]:h-14 max-lg:group-data-[scrolled=true]:h-12 sm:px-6">
         <LanguageSwitcher />
         <LogoLink>
           <Logo
             size={60}
             title={t("logoAlt")}
-            className="h-[60px] w-[60px] transition-[width,height] duration-300 group-data-[scrolled=true]:h-[40px] group-data-[scrolled=true]:w-[40px]"
+            className="h-[60px] w-[60px] transition-[width,height] duration-300 group-data-[scrolled=true]:h-[40px] group-data-[scrolled=true]:w-[40px] max-lg:group-data-[scrolled=true]:h-[36px] max-lg:group-data-[scrolled=true]:w-[36px]"
           />
         </LogoLink>
 

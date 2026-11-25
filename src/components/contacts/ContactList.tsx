@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { contacts, emailLink, mapEmbedSrc, mapLink, schedule, telLink, viberLink } from "@/lib/contacts";
 
@@ -29,8 +29,15 @@ function Icon({ children }: { children: ReactNode }) {
   );
 }
 
-// Список контактів і карта для вікна «Контакти».
-export function ContactList() {
+type ContactListProps = {
+  /** У футері список і карта стоять поруч, а графік — над картою. */
+  variant?: "modal" | "footer";
+};
+
+// Список контактів і карта для вікна «Контакти» та футера.
+export function ContactList({ variant = "modal" }: ContactListProps) {
+  const isFooter = variant === "footer";
+  const scheduleId = useId();
   const t = useTranslations("contacts");
   const locale = useLocale();
   const [scheduleOpen, setScheduleOpen] = useState(false);
@@ -63,8 +70,97 @@ export function ContactList() {
 
   const address = t("address");
 
+  const scheduleBlock = (
+    <div ref={scheduleRef} className="relative min-w-0 flex-1">
+      {!isFooter && <span className={labelClass}>{t("labelSchedule")}</span>}
+      <button
+        type="button"
+        onClick={() => setScheduleOpen((v) => !v)}
+        aria-expanded={scheduleOpen}
+        aria-controls={scheduleId}
+        className="flex min-h-11 w-full items-center justify-between gap-3 rounded-md border border-line px-3 py-2 text-left text-sm transition-colors hover:border-line-strong"
+      >
+        <span>{t("scheduleTitle")}</span>
+        <span className="flex items-center gap-1 text-xs text-muted">
+          <span className="hidden sm:inline">{t("scheduleHint")}</span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`h-3.5 w-3.5 transition-transform ${scheduleOpen ? "rotate-180" : ""}`}
+            aria-hidden="true"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </span>
+      </button>
+      {/* Завжди в DOM, щоб працювала плавна анімація: виїжджає зверху вниз із розмиттям прозорості.
+          У футері дні додатково зʼявляються по черзі, прямо поверх карти. */}
+      <ul
+        id={scheduleId}
+        aria-hidden={!scheduleOpen}
+        className={`absolute inset-x-0 top-full z-20 mt-2 divide-y divide-line rounded-md border border-line-strong bg-black shadow-lg shadow-black transition-[clip-path,opacity,translate,visibility] duration-300 ease-out motion-reduce:transition-none ${
+          isFooter ? "[transition-duration:500ms]" : ""
+        } ${
+          scheduleOpen
+            ? "visible translate-y-0 opacity-100 [clip-path:inset(0_0_0_0)]"
+            : "invisible pointer-events-none -translate-y-2 opacity-0 [clip-path:inset(0_0_100%_0)]"
+        }`}
+      >
+        {schedule.map((row, index) => (
+          <li
+            key={row.day}
+            style={isFooter && scheduleOpen ? { transitionDelay: `${index * 70}ms` } : undefined}
+            className={`flex justify-between gap-3 px-3 py-1.5 text-sm ${
+              isFooter
+                ? `transition-[opacity,translate] duration-300 ease-out motion-reduce:transition-none ${
+                    scheduleOpen ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
+                  }`
+                : ""
+            }`}
+          >
+            <span>{t(`days.${row.day}`)}</span>
+            <span className={row.hours ? "" : "text-muted"}>{row.hours ?? t("scheduleClosed")}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  // Карта: поверх неї прозоре посилання, клік відкриває адресу в Google Maps.
+  const mapBlock = (
+    <div className={`relative aspect-[4/3] ${isFooter ? "min-h-64" : "min-h-52"} w-full sm:aspect-video overflow-hidden rounded-lg border border-line`}>
+      <iframe
+        src={mapEmbedSrc(locale)}
+        title={t("mapTitle", { address })}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        tabIndex={-1}
+        className="h-full w-full border-0"
+      />
+      <a
+        href={mapLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("mapOpenAria", { address })}
+        className="group absolute inset-0 flex items-end justify-center p-3"
+      >
+        <span className="rounded-md border border-line-strong bg-black/80 px-3 py-1 text-xs text-foreground opacity-90 transition-opacity group-hover:opacity-100">
+          {t("mapOpen")}
+        </span>
+      </a>
+    </div>
+  );
+
   return (
-    <div className="flex flex-col gap-4 sm:gap-5">
+    <div
+      className={
+        isFooter ? "grid gap-6 md:grid-cols-2 md:items-start md:gap-8" : "flex flex-col gap-4 sm:gap-5"
+      }
+    >
       <ul className="flex flex-col gap-4 sm:gap-5">
         <li className="flex gap-3">
           <Icon>
@@ -77,7 +173,7 @@ export function ContactList() {
               href={mapLink}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${linkClass} whitespace-normal! break-words`}
+              className={`${linkClass} ${isFooter ? "whitespace-pre-line!" : "whitespace-normal!"} break-words`}
             >
               {address}
             </a>
@@ -132,82 +228,25 @@ export function ContactList() {
           </div>
         </li>
 
-        <li className="flex gap-3">
-          <Icon>
-            <circle cx="12" cy="12" r="9" />
-            <path d="M12 7v5l3 2" />
-          </Icon>
-          <div ref={scheduleRef} className="relative min-w-0 flex-1">
-            <span className={labelClass}>{t("labelSchedule")}</span>
-            <button
-              type="button"
-              onClick={() => setScheduleOpen((v) => !v)}
-              aria-expanded={scheduleOpen}
-              aria-controls="schedule-list"
-              className="flex min-h-11 w-full items-center justify-between gap-3 rounded-md border border-line px-3 py-2 text-left text-sm transition-colors hover:border-line-strong"
-            >
-              <span>{t("scheduleTitle")}</span>
-              <span className="flex items-center gap-1 text-xs text-muted">
-                <span className="hidden sm:inline">{t("scheduleHint")}</span>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className={`h-3.5 w-3.5 transition-transform ${scheduleOpen ? "rotate-180" : ""}`}
-                  aria-hidden="true"
-                >
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </span>
-            </button>
-            {/* Завжди в DOM, щоб працювала плавна анімація: виїжджає зверху вниз із розмиттям прозорості. */}
-            <ul
-              id="schedule-list"
-              aria-hidden={!scheduleOpen}
-              className={`absolute inset-x-0 top-full z-20 mt-2 divide-y divide-line rounded-md border border-line-strong bg-black shadow-lg shadow-black transition-[clip-path,opacity,translate,visibility] duration-300 ease-out motion-reduce:transition-none ${
-                scheduleOpen
-                  ? "visible translate-y-0 opacity-100 [clip-path:inset(0_0_0_0)]"
-                  : "invisible pointer-events-none -translate-y-2 opacity-0 [clip-path:inset(0_0_100%_0)]"
-              }`}
-            >
-                {schedule.map((row) => (
-                  <li key={row.day} className="flex justify-between gap-3 px-3 py-1.5 text-sm">
-                    <span>{t(`days.${row.day}`)}</span>
-                    <span className={row.hours ? "" : "text-muted"}>
-                      {row.hours ?? t("scheduleClosed")}
-                    </span>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </li>
+        {!isFooter && (
+          <li className="flex gap-3">
+            <Icon>
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </Icon>
+            {scheduleBlock}
+          </li>
+        )}
       </ul>
 
-      {/* Карта: поверх неї прозоре посилання, клік відкриває адресу в Google Maps. */}
-      <div className="relative aspect-[4/3] min-h-52 w-full sm:aspect-video overflow-hidden rounded-lg border border-line">
-        <iframe
-          src={mapEmbedSrc(locale)}
-          title={t("mapTitle", { address })}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          tabIndex={-1}
-          className="h-full w-full border-0"
-        />
-        <a
-          href={mapLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={t("mapOpenAria", { address })}
-          className="group absolute inset-0 flex items-end justify-center p-3"
-        >
-          <span className="rounded-md border border-line-strong bg-black/80 px-3 py-1 text-xs text-foreground opacity-90 transition-opacity group-hover:opacity-100">
-            {t("mapOpen")}
-          </span>
-        </a>
-      </div>
+      {isFooter ? (
+        <div className="flex min-w-0 flex-col gap-3">
+          {scheduleBlock}
+          {mapBlock}
+        </div>
+      ) : (
+        mapBlock
+      )}
     </div>
   );
 }

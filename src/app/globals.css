@@ -47,21 +47,37 @@ body {
   transition: transform 0.4s ease;
 }
 
-a:hover .logo-wheel,
+/* Наведення — лише там, де є миша. На сенсорних екранах працює data-spin (дотик / повторний дотик),
+   бо інакше :hover «залипає» після дотику й колесо не зупинити. */
+@media (hover: hover) {
+  a:hover .logo-wheel,
+  svg:hover .logo-wheel {
+    transform: scale(1.12);
+  }
+
+  /* Напис збільшується зовсім трохи, щоб лишатися всередині колеса */
+  a:hover .logo-text,
+  svg:hover .logo-text {
+    transform: scale(1.06);
+  }
+
+  a:hover .logo-wheel-spin,
+  svg:hover .logo-wheel-spin {
+    animation: logo-wheel-spin 2.8s linear infinite;
+  }
+}
+
 a:focus-visible .logo-wheel,
-svg:hover .logo-wheel {
+[data-spin="true"] .logo-wheel {
   transform: scale(1.12);
 }
 
-/* Напис збільшується зовсім трохи, щоб лишатися всередині колеса */
-a:hover .logo-text,
 a:focus-visible .logo-text,
-svg:hover .logo-text {
+[data-spin="true"] .logo-text {
   transform: scale(1.06);
 }
 
-a:hover .logo-wheel-spin,
-svg:hover .logo-wheel-spin {
+[data-spin="true"] .logo-wheel-spin {
   animation: logo-wheel-spin 2.8s linear infinite;
 }
 
@@ -82,12 +98,15 @@ svg:hover .logo-wheel-spin {
   svg:hover .logo-wheel,
   a:hover .logo-text,
   a:focus-visible .logo-text,
-  svg:hover .logo-text {
+  svg:hover .logo-text,
+  [data-spin="true"] .logo-wheel,
+  [data-spin="true"] .logo-text {
     transform: none;
   }
 
   a:hover .logo-wheel-spin,
-  svg:hover .logo-wheel-spin {
+  svg:hover .logo-wheel-spin,
+  [data-spin="true"] .logo-wheel-spin {
     animation: none;
   }
 }

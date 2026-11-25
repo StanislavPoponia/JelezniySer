@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { MotoWheel } from "@/components/ui/MotoWheel";
 
 type ModalProps = {
   open: boolean;
@@ -63,24 +64,7 @@ export function Modal({ open, onClose, title, closeLabel, maxWidthClass = "max-w
             ×
           </span>
           {/* Колесо мотокросового мотоцикла: з'являється замість хрестика й крутиться. */}
-          <svg
-            viewBox="0 0 40 40"
-            fill="none"
-            stroke="currentColor"
-            aria-hidden="true"
-            className="absolute h-8 w-8 opacity-0 transition-opacity group-hover:animate-[spin_2.8s_linear_infinite] group-hover:opacity-100 group-focus-visible:animate-[spin_2.8s_linear_infinite] group-focus-visible:opacity-100 motion-reduce:animate-none"
-          >
-            {/* шина з ґрунтозачепами */}
-            <circle cx="20" cy="20" r="18" strokeWidth="3.5" strokeDasharray="4.2 2.4" />
-            <circle cx="20" cy="20" r="15.5" strokeWidth="1.2" />
-            {/* обід і спиці */}
-            <circle cx="20" cy="20" r="11.5" strokeWidth="1.5" />
-            <g strokeWidth="1">
-              <path d="M20 8.5v23M8.5 20h23M11.9 11.9l16.2 16.2M28.1 11.9 11.9 28.1" />
-            </g>
-            {/* маточина */}
-            <circle cx="20" cy="20" r="3" strokeWidth="2" fill="currentColor" />
-          </svg>
+          <MotoWheel className="absolute h-8 w-8 opacity-0 transition-opacity group-hover:animate-[spin_2.8s_linear_infinite] group-hover:opacity-100 group-focus-visible:animate-[spin_2.8s_linear_infinite] group-focus-visible:opacity-100 motion-reduce:animate-none" />
         </button>
       </div>
       <div className="px-4 py-5 sm:px-5 sm:py-6">{children}</div>

@@ -71,10 +71,19 @@
   },
   "shop": {
     "title": "Shop",
-    "searchPlaceholder": "Search products",
-    "searchLabel": "Search products",
-    "searchButton": "Search",
-    "empty": "Products are coming soon."
+    "searchPlaceholder": "Search parts…",
+    "searchLabel": "Search parts",
+    "clearSearch": "Clear search",
+    "filter": "Filter",
+    "resetFilter": "Reset filter",
+    "categories": "Categories",
+    "article": "Part number",
+    "ask": "Ask about price and availability",
+    "loading": "Loading…",
+    "error": "Could not load the catalogue. Please try again later or contact us.",
+    "notFound": "Nothing found. Contact us and we will find the part you need.",
+    "shelfEmpty": "We are still stocking the shelves. Please check back soon or contact us.",
+    "zoomPhoto": "Enlarge photo"
   },
   "repair": {
     "title": "Repair",
@@ -98,7 +107,23 @@
   "collection": {
     "title": "My collection",
     "intro": "Photos and videos of master Serhii's work.",
-    "soon": "Works will appear soon."
+    "soon": "Works will appear soon.",
+    "add": "Add",
+    "delete": "Delete",
+    "deleteConfirm": "Delete “{name}”?",
+    "deleteError": "Could not delete the item",
+    "error": "Could not load the collection. Please try again later.",
+    "form": {
+      "heading": "Add to the collection",
+      "file": "Photo or video (MP4, WebM or MOV video up to {size} MB)",
+      "title": "Title",
+      "description": "Description (optional)",
+      "submit": "Add",
+      "saving": "Uploading…",
+      "fileType": "This format is not supported. Choose a photo or an MP4, WebM or MOV video.",
+      "videoTooBig": "The video is too large. The maximum size is {size} MB.",
+      "saveError": "Could not save. Check your connection and try again."
+    }
   },
   "cart": {
     "title": "Cart",
@@ -147,5 +172,32 @@
       "generic": "Something went wrong. Please try again.",
       "callbackFailed": "Could not confirm sign-in. Please try again."
     }
+  },
+  "admin": {
+    "title": "Products",
+    "addTitle": "Add product",
+    "editTitle": "Edit product",
+    "name": "Name",
+    "article": "Part number",
+    "category": "Category",
+    "nameEn": "Name in English (optional)",
+    "categoryEn": "Category in English (optional)",
+    "photo": "Photo",
+    "photoKeep": "(leave empty to keep the current one)",
+    "clearFile": "Remove selected file",
+    "add": "Add",
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "saved": "Changes saved",
+    "added": "Product added",
+    "saveError": "Could not save. Check your connection and try again.",
+    "deleteConfirm": "Delete “{name}”?",
+    "deleteError": "Could not delete the product",
+    "edit": "Edit",
+    "remove": "Delete",
+    "showList": "Show products",
+    "hideList": "Hide products",
+    "description": "More about the product (optional)"
   }
 }

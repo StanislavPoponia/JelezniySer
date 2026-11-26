@@ -1,7 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { MotoPlaceholder } from "@/components/ui/MotoPlaceholder";
+import { ShopCatalog } from "@/components/shop/ShopCatalog";
+import { ShopMessage } from "@/components/shop/ShopMessage";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { SearchInput } from "@/components/ui/SearchInput";
+import { getIsAdmin } from "@/lib/auth/is-admin";
+import { getProducts } from "@/lib/products/queries";
 
 export default async function ShopPage({
   params,
@@ -11,19 +13,16 @@ export default async function ShopPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations();
+  const [products, isAdmin] = await Promise.all([getProducts(), getIsAdmin()]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <PageHeader title={t("shop.title")} />
-      <SearchInput
-        label={t("shop.searchLabel")}
-        placeholder={t("shop.searchPlaceholder")}
-        buttonLabel={t("shop.searchButton")}
-      />
-      <div className="mt-10 flex flex-col items-center gap-4">
-        <MotoPlaceholder label={t("common.placeholderAlt")} className="w-full max-w-xl" />
-        <p className="text-muted">{t("shop.empty")}</p>
-      </div>
+      {products ? (
+        <ShopCatalog products={products} isAdmin={isAdmin} />
+      ) : (
+        <ShopMessage text={t("shop.error")} placeholderLabel={t("common.placeholderAlt")} />
+      )}
     </div>
   );
 }

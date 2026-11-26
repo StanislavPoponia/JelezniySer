@@ -13,21 +13,34 @@ const linkClass =
 
 export async function NavLinks({ orientation = "row" }: NavLinksProps) {
   const t = await getTranslations("nav");
-  const direction = orientation === "row" ? "flex-row items-center" : "flex-col items-stretch";
+  // Зліва в пунктів є місце під колесо, тому для рівного центрування додаємо стільки ж справа:
+  // у рядку — один відступ на все меню, у колонці — кожному пункту.
+  const direction =
+    orientation === "row"
+      ? "flex-row items-center gap-3 pr-5.5 xl:gap-8"
+      : "flex-col items-center gap-3 *:pr-7!";
+
+  // Білі лінії між пунктами — лише в бургер-меню.
+  const divider = orientation === "column" && (
+    <span aria-hidden="true" className="h-px w-full bg-line-strong" />
+  );
 
   return (
-    <nav className={`flex gap-1 ${direction}`}>
+    <nav className={`flex ${direction}`}>
       <ContactsModal
         className={`group/nav relative ${linkClass} text-left`}
         labelClassName={navLabelClass}
         icon={<NavWheel />}
       />
+      {divider}
       <NavLink href="/shop" className={linkClass}>
         {t("shop")}
       </NavLink>
+      {divider}
       <NavLink href="/repair" className={linkClass}>
         {t("repair")}
       </NavLink>
+      {divider}
       <NavLink href="/collection" className={linkClass}>
         {t("collection")}
       </NavLink>

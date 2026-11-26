@@ -16,18 +16,24 @@ export async function Header() {
 
   return (
     <HeaderShell>
-      <div className="mx-auto flex h-20 max-w-6xl items-center gap-3 px-4 transition-[height] duration-300 group-data-[scrolled=true]:h-14 max-lg:group-data-[scrolled=true]:h-12 sm:px-6">
-        <LanguageSwitcher />
-        <LogoLink>
-          <Logo
-            size={60}
-            title={t("logoAlt")}
-            className="h-[60px] w-[60px] transition-[width,height] duration-300 group-data-[scrolled=true]:h-[40px] group-data-[scrolled=true]:w-[40px] max-lg:group-data-[scrolled=true]:h-[36px] max-lg:group-data-[scrolled=true]:w-[36px]"
-          />
-        </LogoLink>
+      {/* На ПК три колонки з однаковими краями, тому меню стоїть точно по центру хедера. */}
+      <div className="mx-auto flex h-20 max-w-6xl items-center gap-3 px-4 transition-[height] duration-300 group-data-[scrolled=true]:h-14 max-lg:group-data-[scrolled=true]:h-12 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr]">
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <LogoLink>
+            <Logo
+              size={60}
+              title={t("logoAlt")}
+              className="h-[60px] w-[60px] transition-[width,height] duration-300 group-data-[scrolled=true]:h-[40px] group-data-[scrolled=true]:w-[40px] max-lg:group-data-[scrolled=true]:h-[36px] max-lg:group-data-[scrolled=true]:w-[36px]"
+            />
+          </LogoLink>
+        </div>
 
-        <div className="ml-auto hidden items-center gap-6 lg:flex">
+        <div className="hidden lg:block">
           <NavLinks />
+        </div>
+
+        <div className="hidden justify-self-end lg:block">
           <UserMenu isLoggedIn={isLoggedIn} />
         </div>
 

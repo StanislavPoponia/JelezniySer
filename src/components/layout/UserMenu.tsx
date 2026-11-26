@@ -31,7 +31,8 @@ function CartIcon() {
 export async function UserMenu({ isLoggedIn, orientation = "row" }: UserMenuProps) {
   const t = await getTranslations("nav");
   const locale = await getLocale();
-  const direction = orientation === "row" ? "flex-row items-center" : "flex-col items-stretch";
+  // Кнопки завжди в один ряд; у бургер-меню (column) — по центру.
+  const direction = orientation === "row" ? "flex-row items-center" : "flex-row items-center justify-center";
 
   if (!isLoggedIn) {
     return (

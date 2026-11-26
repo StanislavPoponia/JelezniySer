@@ -1,37 +1,56 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef } from "react";
 
 type SearchInputProps = {
+  value: string;
+  onChange: (value: string) => void;
   label: string;
   placeholder: string;
-  buttonLabel: string;
+  clearLabel: string;
 };
 
-// Поле пошуку товарів. Логіка пошуку по даних з'явиться разом із каталогом.
-export function SearchInput({ label, placeholder, buttonLabel }: SearchInputProps) {
-  const [query, setQuery] = useState("");
-
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-  };
+// Поле миттєвого пошуку товарів з кнопкою очищення.
+export function SearchInput({ value, onChange, label, placeholder, clearLabel }: SearchInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <form onSubmit={onSubmit} role="search" className="flex w-full gap-2">
+    <div role="search" className="relative min-w-0 flex-1">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        aria-hidden="true"
+        className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted"
+      >
+        <circle cx="11" cy="11" r="7" />
+        <path d="m20 20-4-4" />
+      </svg>
       <input
+        ref={inputRef}
         type="search"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         aria-label={label}
         placeholder={placeholder}
-        className="min-w-0 flex-1 rounded-md border border-line bg-black px-4 py-3 text-base text-foreground placeholder:text-muted/60 focus:border-foreground focus:outline-none"
+        autoComplete="off"
+        className="h-13 w-full rounded-md border border-line bg-black px-12 text-base text-foreground placeholder:text-muted/60 focus:border-foreground focus:outline-none [&::-webkit-search-cancel-button]:hidden"
       />
-      <button
-        type="submit"
-        className="rounded-md border border-line-strong px-5 py-3 text-sm font-semibold hover:bg-white hover:text-black"
-      >
-        {buttonLabel}
-      </button>
-    </form>
+      {value && (
+        <button
+          type="button"
+          onClick={() => {
+            onChange("");
+            inputRef.current?.focus();
+          }}
+          aria-label={clearLabel}
+          className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-2xl leading-none text-muted hover:text-foreground"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      )}
+    </div>
   );
 }

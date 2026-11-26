@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useId, useRef, useSyncExternalStore, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { MotoWheel } from "@/components/ui/MotoWheel";
 
@@ -27,6 +27,8 @@ const useIsClient = () =>
 export function Modal({ open, onClose, title, closeLabel, maxWidthClass = "max-w-md", children }: ModalProps) {
   const isClient = useIsClient();
   const dialogRef = useRef<HTMLDialogElement>(null);
+  // Вікон на сторінці кілька, тому в кожного заголовка свій id.
+  const titleId = useId();
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -40,15 +42,19 @@ export function Modal({ open, onClose, title, closeLabel, maxWidthClass = "max-w
   return createPortal(
     <dialog
       ref={dialogRef}
-      onClose={onClose}
+      /* Подія close приходить і після програмного закриття (open уже false) —
+         тоді onClose не викликаємо, щоб не скидати стан батьківського компонента. */
+      onClose={() => {
+        if (open) onClose();
+      }}
       onClick={(e) => {
         if (e.target === dialogRef.current) onClose();
       }}
-      aria-labelledby="modal-title"
+      aria-labelledby={titleId}
       className={`m-auto max-h-[calc(100dvh-1.5rem)] w-[calc(100%-1.5rem)] overflow-y-auto overscroll-contain sm:w-[calc(100%-2rem)] ${maxWidthClass} rounded-lg border border-line-strong bg-black p-0 text-foreground backdrop:bg-black/80`}
     >
       <div className="sticky top-0 z-30 flex items-center justify-between border-b border-line bg-black px-4 py-3 sm:px-5 sm:py-4">
-        <h2 id="modal-title" className="text-lg font-bold">
+        <h2 id={titleId} className="text-lg font-bold">
           {title}
         </h2>
         <button
